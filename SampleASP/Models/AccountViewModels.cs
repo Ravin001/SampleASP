@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SampleASP.Models
 {
@@ -79,8 +81,34 @@ namespace SampleASP.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+
+        [Required]
+        [Display(Name = "Account Type")]
+        public AccountType AccountType { get; set; }
+
+        [Required]
+        [Column(TypeName = "date")]
+        [Display(Name = "Date of Birth")]
+        public DateTime DateOfBirth { get; set; }
     }
 
+    public enum AccountType
+    {
+        Personal,
+        Business
+    }
     public class ResetPasswordViewModel
     {
         [Required]

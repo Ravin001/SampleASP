@@ -179,6 +179,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902060005148_InitialCreate.cs" />
+    <Compile Include="Migrations\201902060005148_InitialCreate.Designer.cs">
+      <DependentUpon>201902060005148_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902060135119_AccountTypeChange.cs" />
+    <Compile Include="Migrations\201902060135119_AccountTypeChange.Designer.cs">
+      <DependentUpon>201902060135119_AccountTypeChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -187,6 +196,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\studymaterial.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -249,6 +260,14 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201902060005148_InitialCreate.resx">
+      <DependentUpon>201902060005148_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902060135119_AccountTypeChange.resx">
+      <DependentUpon>201902060135119_AccountTypeChange.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

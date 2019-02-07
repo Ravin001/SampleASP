@@ -149,9 +149,45 @@ namespace SampleASP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            string AccountType = model.AccountType.ToString();
+            bool validationFailed = false;
+            if (AccountType == "Personal")
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                if (String.IsNullOrEmpty(model.FirstName) && String.IsNullOrEmpty(model.LastName))
+                {
+                    validationFailed = true;
+                    ModelState.AddModelError("FirstName", "The first or last name is missing");
+                }
+            }
+            else if (AccountType == "Business")
+            {
+                if (String.IsNullOrEmpty(model.CompanyName))
+                {
+                    validationFailed = true;
+                    ModelState.AddModelError("CompanyName", "The company name is missing");
+                }
+                
+            }
+            int eighteenAgeYear = DateTime.Now.Year - 18;
+            DateTime eighteenAgeDate = new DateTime(eighteenAgeYear, DateTime.Now.Month, DateTime.Now.Day);
+            DateTime birthDate = model.DateOfBirth;
+            if (birthDate.CompareTo(eighteenAgeDate) > 0)
+            {
+                validationFailed = true;
+                ModelState.AddModelError("DateOfBirth", "You are younger than 18 years old");
+            }
+                
+            if (ModelState.IsValid && validationFailed == false)
+            {
+                var user = new ApplicationUser {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    CompanyName = model.CompanyName,
+                    AccountType = model.AccountType,
+                    DateOfBirth = model.DateOfBirth
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

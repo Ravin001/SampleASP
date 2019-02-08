@@ -188,6 +188,10 @@
     <Compile Include="Migrations\201902060135119_AccountTypeChange.Designer.cs">
       <DependentUpon>201902060135119_AccountTypeChange.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081841020_FinalChanges.cs" />
+    <Compile Include="Migrations\201902081841020_FinalChanges.Designer.cs">
+      <DependentUpon>201902081841020_FinalChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -283,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902060135119_AccountTypeChange.resx">
       <DependentUpon>201902060135119_AccountTypeChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081841020_FinalChanges.resx">
+      <DependentUpon>201902081841020_FinalChanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

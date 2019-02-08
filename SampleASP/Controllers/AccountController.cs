@@ -153,7 +153,7 @@ namespace SampleASP.Controllers
             bool validationFailed = false;
             if (AccountType == "Personal")
             {
-                if (String.IsNullOrEmpty(model.FirstName) && String.IsNullOrEmpty(model.LastName))
+                if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
                 {
                     validationFailed = true;
                     ModelState.AddModelError("FirstName", "The first or last name is missing");

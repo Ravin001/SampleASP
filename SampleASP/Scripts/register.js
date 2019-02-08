@@ -5,7 +5,8 @@
     validAge.setFullYear(currentDate.getFullYear() - 18);
     $('#DateOfBirth').datetimepicker({
         format: 'L',
-        maxDate: validAge
+        maxDate: validAge,
+        date: currentDOB
     });
     accountTypeSelectEl = document.getElementById("AccountType");
     enableOrDisableCompanyFields();

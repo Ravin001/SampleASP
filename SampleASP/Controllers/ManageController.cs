@@ -51,6 +51,71 @@ namespace SampleASP.Controllers
         }
 
         //
+        // POST: /Manage/Index
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(ProfileViewModel model)
+        {
+            string AccountType = model.AccountType.ToString();
+            bool validationFailed = false;
+            if (AccountType == "Personal")
+            {
+                if (String.IsNullOrEmpty(model.FirstName) || String.IsNullOrEmpty(model.LastName))
+                {
+                    validationFailed = true;
+                    ModelState.AddModelError("FirstName", "The first or last name is missing");
+                }
+            }
+            else if (AccountType == "Business")
+            {
+                if (String.IsNullOrEmpty(model.CompanyName))
+                {
+                    validationFailed = true;
+                    ModelState.AddModelError("CompanyName", "The company name is missing");
+                }
+
+            }
+            int eighteenAgeYear = DateTime.Now.Year - 18;
+            DateTime eighteenAgeDate = new DateTime(eighteenAgeYear, DateTime.Now.Month, DateTime.Now.Day);
+            DateTime birthDate = model.DateOfBirth;
+            if (birthDate.CompareTo(eighteenAgeDate) > 0)
+            {
+                validationFailed = true;
+                ModelState.AddModelError("DateOfBirth", "You are younger than 18 years old");
+            }
+
+            if (ModelState.IsValid && validationFailed == false)
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+
+                user.UserName = model.Email;
+                    user.Email = model.Email;
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.CompanyName = model.CompanyName;
+                user.AccountType = model.AccountType;
+                user.DateOfBirth = model.DateOfBirth;
+                var result = UserManager.Update(user);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
@@ -62,17 +127,25 @@ namespace SampleASP.Controllers
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
-
-            var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            if (User.Identity.IsAuthenticated)
             {
-                HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-            };
-            return View(model);
+                var userId = User.Identity.GetUserId();
+                ApplicationDbContext db = new ApplicationDbContext();
+                var user = db.Users.Where(x => x.Id == userId).FirstOrDefault();
+                ProfileViewModel model = new ProfileViewModel();
+                model.AccountType = user.AccountType;
+                model.CompanyName = user.CompanyName;
+                model.DateOfBirth = user.DateOfBirth;
+                model.Email = user.Email;
+                model.FirstName = user.FirstName;
+                model.LastName = user.LastName;
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Login", "AccountController");
+            }
+            
         }
 
         //

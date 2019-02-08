@@ -1,13 +1,19 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     // Handler when the DOM is fully loaded
+
+    // calculate the valid age (18 years)
     var currentDate = new Date();
     var validAge = currentDate;
     validAge.setFullYear(currentDate.getFullYear() - 18);
+
+    // intialize the datetimepicker
     $('#DateOfBirth').datetimepicker({
         format: 'L',
         maxDate: validAge,
         date: currentDOB
     });
+
+    // logic to hide and unhide the html elements according to account type
     accountTypeSelectEl = document.getElementById("AccountType");
     enableOrDisableCompanyFields();
     accountTypeSelectEl.addEventListener("change", enableOrDisableCompanyFields);

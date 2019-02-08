@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -7,12 +9,33 @@ namespace SampleASP.Models
 {
     public class IndexViewModel
     {
-        public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
-    }
+        // we need all the user fields except password
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [StringLength(50)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [StringLength(50)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [StringLength(50)]
+            [Display(Name = "Company Name")]
+            public string CompanyName { get; set; }
+
+            [Required]
+            [Display(Name = "Account Type")]
+            public AccountType AccountType { get; set; }
+
+            [Required]
+            [Column(TypeName = "date")]
+            [Display(Name = "Date of Birth")]
+            public DateTime DateOfBirth { get; set; }
+        }
 
     public class ManageLoginsViewModel
     {

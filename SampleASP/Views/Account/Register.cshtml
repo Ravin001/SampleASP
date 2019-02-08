@@ -72,6 +72,20 @@
 }
 
 @section Scripts {
+    <script type="text/javascript">
+        var currentDOB = null;
+    </script>
+    @if (Model != null)
+    {
+    <script type="text/javascript">
+
+
+     
+        // minus 1 for month because the month is zero based in Date constructor in js
+     currentDOB = new Date(@Model.DateOfBirth.Year, @Model.DateOfBirth.Month - 1, @Model.DateOfBirth.Day);
+    </script>
+    }
+
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
     <script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker.min.js"></script>

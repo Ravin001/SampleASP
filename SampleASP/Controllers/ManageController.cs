@@ -32,9 +32,9 @@ namespace SampleASP.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -55,7 +55,7 @@ namespace SampleASP.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(ProfileViewModel model)
+        public async Task<ActionResult> Index(IndexViewModel model)
         {
             string AccountType = model.AccountType.ToString();
             bool validationFailed = false;
@@ -90,7 +90,7 @@ namespace SampleASP.Controllers
                 var user = UserManager.FindById(User.Identity.GetUserId());
 
                 user.UserName = model.Email;
-                    user.Email = model.Email;
+                user.Email = model.Email;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.CompanyName = model.CompanyName;
@@ -132,7 +132,7 @@ namespace SampleASP.Controllers
                 var userId = User.Identity.GetUserId();
                 ApplicationDbContext db = new ApplicationDbContext();
                 var user = db.Users.Where(x => x.Id == userId).FirstOrDefault();
-                ProfileViewModel model = new ProfileViewModel();
+                IndexViewModel model = new IndexViewModel();
                 model.AccountType = user.AccountType;
                 model.CompanyName = user.CompanyName;
                 model.DateOfBirth = user.DateOfBirth;
@@ -145,7 +145,7 @@ namespace SampleASP.Controllers
             {
                 return RedirectToAction("Login", "AccountController");
             }
-            
+
         }
 
         //
@@ -406,7 +406,7 @@ namespace SampleASP.Controllers
             base.Dispose(disposing);
         }
 
-#region Helpers
+        #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
@@ -457,6 +457,6 @@ namespace SampleASP.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

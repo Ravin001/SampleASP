@@ -1,5 +1,5 @@
 ﻿@using SampleASP.Models
-@model ProfileViewModel
+@model IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
@@ -60,7 +60,8 @@
 
     @section Scripts {
         <script type="text/javascript">
-            var currentDOB = new Date(@Model.DateOfBirth.Year, @Model.DateOfBirth.Month, @Model.DateOfBirth.Day)
+            // minus 1 for month because the month is zero based in Date constructor in js
+            var currentDOB = new Date(@Model.DateOfBirth.Year, @Model.DateOfBirth.Month - 1, @Model.DateOfBirth.Day);
         </script>
         @Scripts.Render("~/bundles/jqueryval")
         <script type="text/javascript" src="~/Scripts/moment.min.js"></script>

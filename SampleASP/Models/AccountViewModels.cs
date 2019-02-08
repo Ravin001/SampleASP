@@ -104,35 +104,6 @@ namespace SampleASP.Models
         public DateTime DateOfBirth { get; set; }
     }
 
-    public class ProfileViewModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [StringLength(50)]
-        [Display(Name = "First Name")]
-        public string FirstName { get; set; }
-
-        [StringLength(50)]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
-        [StringLength(50)]
-        [Display(Name = "Company Name")]
-        public string CompanyName { get; set; }
-
-        [Required]
-        [Display(Name = "Account Type")]
-        public AccountType AccountType { get; set; }
-
-        [Required]
-        [Column(TypeName = "date")]
-        [Display(Name = "Date of Birth")]
-        public DateTime DateOfBirth { get; set; }
-    }
-
     public enum AccountType
     {
         Personal,
